@@ -6,7 +6,7 @@
 
 #include <cstdlib>
 #include "base_deces.hpp"
-#include "base_prenoms.hpp"
+// #include "base_prenoms.hpp"
 #include <iostream>
 using namespace std;
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	base_prenoms_t bp;
+	base_deces_t bp;
 
 	lire_base_deces(argv[1],bp);
 

@@ -6,7 +6,9 @@
  #include <string>
  #include <vector>
  #include "base_deces.hpp"
- #include "base_prenoms.hpp"
+ // #include "base_prenoms.hpp"
+
+ using namespace std;
 
 void lire_base_deces(const string& nomfic, base_deces_t& bp)
 {
@@ -41,16 +43,16 @@ void lire_base_deces(const string& nomfic, base_deces_t& bp)
 
 		}
 	} catch (const io::error::can_not_open_file& e) {
-		cerr << e.what() << endl;
+		cerr << e.what() << "\n";
 		exit(1);
 	}
 }
 
 //fonction séparant les prénoms associés et renvoyant une paire prenom/prénoms associés
-separes_t separate(std::string prenoms_str){
+separes_t separate(string prenoms_str){
 	stringstream s(prenoms_str);
 	string p_sep;
 	while (s>>p_sep){
-		std::cout << p_sep << '\n';
+		cout << p_sep << '\n';
 	}
 }
