@@ -16,7 +16,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	if (argc != 2) {
-		cerr << "Erreur: nom de fichier csv attendu\n";
+		cerr << "Erreur: nom de fichier csv attendu merde\n";
 		exit(2);
 	}
 
