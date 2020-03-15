@@ -23,11 +23,11 @@
                    //séparation des prénoms
                    std::vector<std::string> liste_prenoms;
                    separate(prenomstr, liste_prenoms);
-                   std::cout << "Liste de prénoms créée" << '\n';
+                   std::cout << '\n';
 
                    prenom_add(liste_prenoms, bp);
                    for (std::string prenom : liste_prenoms) {
-                        std::cout << prenom << '\n';
+                        std::cout << prenom << '\t';
                   }
                   // stringstream s(prenomstr);
                   //
@@ -74,28 +74,26 @@ void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces
       for (std::string prenom : liste_prenoms) {
             auto iter = base_deces.find(prenom);
 
-        	if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
+            if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
                   //on ajoute les prénoms associés à la table de hash
                   for (std::string prenom_A : liste_prenoms) {
                         if (prenom != prenom_A){
                               branche_t branche;
-                              branche[prenom_A] = 0;
+                              branche[prenom_A] ++;
                               base_deces[prenom] = branche;
                         }
                   }
             } else { // Le prénom n'est pas dans la base ?
-                  // // => On l'y ajoute
-                  // prenom_t iter = iter;
+            // // => On l'y ajoute
                   base_deces[prenom];
-
                   for (std::string prenom_A : liste_prenoms) {
                         if (prenom != prenom_A){
                               branche_t branche;
-                              branche[prenom_A] = 0;
+                              branche[prenom_A] ++;
                               base_deces[prenom] = branche;
                         }
                   }
-            // std::cout << iter << '\n';
+                  // std::cout << iter << '\n';
             }
 
       }
