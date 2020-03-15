@@ -22,6 +22,7 @@ enum class sexe_t {
 std::ostream& operator<<(std::ostream& os, sexe_t s);
 
 using prenom_t = std::pair<std::string, sexe_t>;
+std::ostream& operator<<(std::ostream& os, const prenom_t& p);
 
 struct hash_pair {
 	template <class T1, class T2>
@@ -46,7 +47,7 @@ using branche_t = std::pair<int, prenom_t>;
 //pour la fonction sépararnt les prénoms et les associants:
 using separes_t = std::pair<std::string, std::vector<std::string> >;
 //fonction séparant les prénoms associés et renvoyant une paire prenom/prénoms associés
-separes_t separate(std::string prenoms_str);
+std::vector<prenom_t> separate(std::string prenoms_str, auto& liste_p, int sexe);
 
 
 

@@ -19,10 +19,13 @@ void lire_base_deces(const string& nomfic, base_deces_t& bp)
 		int sexe;
 		string p_sep, prenom;
 		// uint32_t annee, nombre;
+    std::vector<prenom_t> liste_prenoms;
 		while (f.read_row(prenomstr, sexe)) {
+      int sexe_a = sexe;
 
 			//séparation des prénoms
-			separate(prenomstr);
+      separate(prenomstr, liste_prenoms, sexe_a);
+
 			// stringstream s(prenomstr);
 			//
 			// while (s>>p_sep){
@@ -42,17 +45,25 @@ void lire_base_deces(const string& nomfic, base_deces_t& bp)
 
 
 		}
+
+    for (prenom_t a : liste_prenoms) {
+      std::cout << a << '\n';
+    }
+
 	} catch (const io::error::can_not_open_file& e) {
 		cerr << e.what() << "\n";
 		exit(1);
 	}
 }
 
-//fonction séparant les prénoms associés et renvoyant une paire prenom/prénoms associés
-separes_t separate(string prenoms_str){
+//fonction séparant les prénoms associés et renvoyant une liste de prénoms associés
+std::vector<prenom_t> separate(string prenoms_str, auto& liste_p, int sexe){
+  int sexe_a = sexe;
 	stringstream s(prenoms_str);
 	string p_sep;
 	while (s>>p_sep){
-		cout << p_sep << '\n';
+    prenom_t p_sepa = prenom_t{p_sep,sexe_t(sexe_a)};
+    liste_p.push_back(p_sepa);
+		// cout << p_sep << '\n';
 	}
 }
