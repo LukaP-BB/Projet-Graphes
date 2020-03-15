@@ -8,24 +8,30 @@
  #include "base_deces.hpp"
  // #include "base_prenoms.hpp"
 
- using namespace std;
+ // using namespace std;
 
-void lire_base_deces(const string& nomfic, base_deces_t& bp)
+void lire_base_deces(const std::string& nomfic, base_deces_t& bp)
 {
 	try {
 		deces_file_t f(nomfic);
 		f.read_header(io::ignore_extra_column,"prenom","sexe");
-		string prenomstr;
+		std::string prenomstr;
 		int sexe;
-		string p_sep, prenom;
+		std::string p_sep, prenom;
 		// uint32_t annee, nombre;
-    std::vector<prenom_t> liste_prenoms;
 		while (f.read_row(prenomstr, sexe)) {
       int sexe_a = sexe;
 
 			//séparation des prénoms
+      std::vector<prenom_t> liste_prenoms;
       separate(prenomstr, liste_prenoms, sexe_a);
+      std::cout << "Une liste de prénoms associés" << '\n';
 
+      prenom_add(liste_prenoms, bp);
+      // for (prenom_t prenom : liste_prenoms) {
+      //
+      //   std::cout << prenom << '\n';
+      // }
 			// stringstream s(prenomstr);
 			//
 			// while (s>>p_sep){
@@ -46,24 +52,46 @@ void lire_base_deces(const string& nomfic, base_deces_t& bp)
 
 		}
 
-    for (prenom_t a : liste_prenoms) {
-      std::cout << a << '\n';
-    }
 
 	} catch (const io::error::can_not_open_file& e) {
-		cerr << e.what() << "\n";
+		std::cerr << e.what() << "\n";
 		exit(1);
 	}
 }
 
-//fonction séparant les prénoms associés et renvoyant une liste de prénoms associés
-std::vector<prenom_t> separate(string prenoms_str, auto& liste_p, int sexe){
+
+//fonction séparant les prénoms associés et en faisant une liste
+void separate(std::string prenoms_str, auto& liste_p, int sexe){
   int sexe_a = sexe;
-	stringstream s(prenoms_str);
-	string p_sep;
+	std::stringstream s(prenoms_str);
+	std::string p_sep;
 	while (s>>p_sep){
     prenom_t p_sepa = prenom_t{p_sep,sexe_t(sexe_a)};
     liste_p.push_back(p_sepa);
-		// cout << p_sep << '\n';
 	}
+}
+
+// TODO
+//fonction prenant la liste de prénoms associés,
+//recherchant chacun de ces prénoms dans la base_deces
+//et ajoutant les autres prénoms à la table de hash associée
+void prenom_add(std::vector<prenom_t> liste_prenoms, base_deces_t& base_deces){
+  for (prenom_t prenom : liste_prenoms) {
+    const auto& iter = base_deces.find(prenom);
+
+  	if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
+      //on ajoute les prénoms associés à la table de hash
+      // for (prenom_t prenom : liste_prenoms) {
+      //   if (prenom != iter){
+      //
+      //   }
+      // }
+
+      // bp[prenom];
+  		// ++(iter->second)[annee-1900];
+  	} else { // Le prénom n'est pas dans la base ?
+  	// // => On l'y ajoute
+  		base_deces[prenom];
+  	}
+  }
 }

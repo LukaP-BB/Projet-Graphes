@@ -44,10 +44,11 @@ using base_deces_t = std::unordered_map<prenom_t,int,hash_pair,equality_prenom_t
 void lire_base_deces(const std::string& nomfic, base_deces_t& bp);
 using branche_t = std::pair<int, prenom_t>;
 
-//pour la fonction sépararnt les prénoms et les associants:
-using separes_t = std::pair<std::string, std::vector<std::string> >;
+
 //fonction séparant les prénoms associés et renvoyant une paire prenom/prénoms associés
-std::vector<prenom_t> separate(std::string prenoms_str, auto& liste_p, int sexe);
+void separate(std::string prenoms_str, auto& liste_p, int sexe);
+//fonction insérant ces prénoms dans la base
+void prenom_add(std::vector<prenom_t> liste_prenoms, base_deces_t& base_deces);
 
 
 
