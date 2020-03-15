@@ -27,7 +27,10 @@ int main(int argc, char *argv[])
 	// cout << bp.first.first;
 	//
 	for (const auto& p : bp) {
-		cout << p.first.first << endl;
+		cout << p.first << endl;
+		for (const auto& p : p.second){
+			cout << "\t" << p.first << " " << p.second <<endl;
+		}
 	}
 }
 

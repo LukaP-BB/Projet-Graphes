@@ -23,12 +23,12 @@
                    //séparation des prénoms
                    std::vector<std::string> liste_prenoms;
                    separate(prenomstr, liste_prenoms);
-                   std::cout << '\n';
 
                    prenom_add(liste_prenoms, bp);
                    for (std::string prenom : liste_prenoms) {
                         std::cout << prenom << '\t';
                   }
+                  std::cout << '\n';
                   // stringstream s(prenomstr);
                   //
                   // while (s>>p_sep){
@@ -71,26 +71,26 @@ void separate(std::string prenoms_str, auto& liste_p){
 //recherchant chacun de ces prénoms dans la base_deces
 //et ajoutant les autres prénoms à la table de hash associée
 void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces){
-      for (std::string prenom : liste_prenoms) {
-            auto iter = base_deces.find(prenom);
-
+      for (std::string prenom_noeud : liste_prenoms) {
+            auto iter = base_deces.find(prenom_noeud);
+            branche_t branche;
             if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
                   //on ajoute les prénoms associés à la table de hash
-                  for (std::string prenom_A : liste_prenoms) {
-                        if (prenom != prenom_A){
-                              branche_t branche;
-                              branche[prenom_A] ++;
-                              base_deces[prenom] = branche;
+                  for (std::string prenom_branche : liste_prenoms) {
+                        if (prenom_noeud != prenom_branche){
+                              branche = base_deces[prenom_noeud];
+                              branche[prenom_branche] ++;
+                              base_deces[prenom_noeud] = branche;
                         }
                   }
             } else { // Le prénom n'est pas dans la base ?
             // // => On l'y ajoute
-                  base_deces[prenom];
-                  for (std::string prenom_A : liste_prenoms) {
-                        if (prenom != prenom_A){
-                              branche_t branche;
-                              branche[prenom_A] ++;
-                              base_deces[prenom] = branche;
+                  base_deces[prenom_noeud];
+                  for (std::string prenom_branche : liste_prenoms) {
+                        if (prenom_branche != prenom_noeud){
+                              branche = base_deces[prenom_noeud];
+                              branche[prenom_branche] ++;
+                              base_deces[prenom_noeud] = branche;
                         }
                   }
                   // std::cout << iter << '\n';

@@ -100,8 +100,7 @@ using occurrences_t = std::array<uint32_t,OFFSET>;
 	indiquant pour chaque année de 1900 à 2018 le nombre de naissances portant ce
 	prénom.
  */
-using base_prenoms_t = std::unordered_map<prenom_t,occurrences_t,
-																					hash_pair,equality_prenom_t>;
+using base_prenoms_t = std::unordered_map<prenom_t,occurrences_t, hash_pair,equality_prenom_t>;
 
 /*
 	Lecture d'un fichier INSEE de prénoms au format CSV.
