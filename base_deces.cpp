@@ -8,8 +8,6 @@
  #include "base_deces.hpp"
  // #include "base_prenoms.hpp"
 
- // using namespace std;
-
  void lire_base_deces(const std::string& nomfic, base_deces_t& bp)
  {
        try {
@@ -26,36 +24,14 @@
 
                    prenom_add(liste_prenoms, bp);
                    for (std::string prenom : liste_prenoms) {
-                        std::cout << prenom << '\t';
+                        // std::cout << prenom << '\t';
                   }
-                  std::cout << '\n';
-                  // stringstream s(prenomstr);
-                  //
-                  // while (s>>p_sep){
-                  //
-                  // 	auto prenom = prenom_t{p_sep,sexe_t(sexe)};
-                  // 	const auto& iter = bp.find(prenom);
-                  // 	if (iter != bp.end()) { // Le prénom est déjà dans la base ?
-                  //
-                  // 		// bp[prenom];
-                  // 		// => on ajoute l'année courante et le nombre d'occurrences
-                  // 	// 	++(iter->second)[annee-1900];
-                  // 	} else { // Le prénom n'est pas dans la base ?
-                  // 	// // => On l'y ajoute
-                  // 		bp[prenom];
-                  // 	}
-                  // }
-
-
             }
-
-
       } catch (const io::error::can_not_open_file& e) {
             std::cerr << e.what() << "\n";
             exit(1);
       }
 }
-
 
 //fonction séparant les prénoms associés et en faisant une liste
 void separate(std::string prenoms_str, auto& liste_p){
@@ -66,7 +42,6 @@ void separate(std::string prenoms_str, auto& liste_p){
       }
 }
 
-// TODO
 //fonction prenant la liste de prénoms associés,
 //recherchant chacun de ces prénoms dans la base_deces
 //et ajoutant les autres prénoms à la table de hash associée
@@ -93,8 +68,6 @@ void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces
                               base_deces[prenom_noeud] = branche;
                         }
                   }
-                  // std::cout << iter << '\n';
             }
-
       }
 }

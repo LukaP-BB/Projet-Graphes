@@ -51,9 +51,4 @@ void separate(std::string prenoms_str, auto& liste_p);
 //fonction insérant ces prénoms dans la base
 void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces);
 
-
-
-
-
-
 #endif // __base_deces_hpp__
