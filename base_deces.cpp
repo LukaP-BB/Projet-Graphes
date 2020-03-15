@@ -25,21 +25,20 @@ void lire_base_deces(const std::string& nomfic, base_deces_t& bp)
 			//séparation des prénoms
       std::vector<prenom_t> liste_prenoms;
       separate(prenomstr, liste_prenoms, sexe_a);
-      std::cout << "Une liste de prénoms associés" << '\n';
+      std::cout << "Liste de prénoms créée" << '\n';
 
       prenom_add(liste_prenoms, bp);
-      // for (prenom_t prenom : liste_prenoms) {
-      //
-      //   std::cout << prenom << '\n';
-      // }
+      for (prenom_t prenom : liste_prenoms) {
+        std::cout << prenom << '\n';
+      }
 			// stringstream s(prenomstr);
-			//
+      //
 			// while (s>>p_sep){
-			//
+      //
 			// 	auto prenom = prenom_t{p_sep,sexe_t(sexe)};
 			// 	const auto& iter = bp.find(prenom);
 			// 	if (iter != bp.end()) { // Le prénom est déjà dans la base ?
-			//
+      //
 			// 		// bp[prenom];
 			// 		// => on ajoute l'année courante et le nombre d'occurrences
 			// 	// 	++(iter->second)[annee-1900];
@@ -76,22 +75,32 @@ void separate(std::string prenoms_str, auto& liste_p, int sexe){
 //recherchant chacun de ces prénoms dans la base_deces
 //et ajoutant les autres prénoms à la table de hash associée
 void prenom_add(std::vector<prenom_t> liste_prenoms, base_deces_t& base_deces){
-  for (prenom_t prenom : liste_prenoms) {
-    const auto& iter = base_deces.find(prenom);
+      for (prenom_t prenom : liste_prenoms) {
+            auto iter = base_deces.find(prenom);
 
-  	if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
-      //on ajoute les prénoms associés à la table de hash
-      // for (prenom_t prenom : liste_prenoms) {
-      //   if (prenom != iter){
-      //
-      //   }
-      // }
+        	if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
+                  //on ajoute les prénoms associés à la table de hash
+                  for (prenom_t prenom_A : liste_prenoms) {
+                        if (prenom != prenom_A){
+                              branche_t branche;
+                              branche[prenom_A] = 0;
+                              base_deces[prenom] = branche;
+                        }
+                  }
+            } else { // Le prénom n'est pas dans la base ?
+                  // // => On l'y ajoute
+                  // prenom_t iter = iter;
+                  base_deces[prenom];
 
-      // bp[prenom];
-  		// ++(iter->second)[annee-1900];
-  	} else { // Le prénom n'est pas dans la base ?
-  	// // => On l'y ajoute
-  		base_deces[prenom];
-  	}
-  }
+                  for (prenom_t prenom_A : liste_prenoms) {
+                        if (prenom != prenom_A){
+                              branche_t branche;
+                              branche[prenom_A] = 0;
+                              base_deces[prenom] = branche;
+                        }
+                  }
+            // std::cout << iter << '\n';
+            }
+
+      }
 }

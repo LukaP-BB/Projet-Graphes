@@ -39,12 +39,13 @@ struct equality_prenom_t {
 	}
 };
 
-using base_deces_t = std::unordered_map<prenom_t,int,hash_pair,equality_prenom_t>;
+//Une table qui contiendra des prénoms et un poids associé
+using branche_t = std::unordered_map<prenom_t,int, hash_pair,equality_prenom_t >;
+//Une table qui contiendra pour chaque prénom, la table des prénoms associés branche_t
+using base_deces_t = std::unordered_map<prenom_t,branche_t,hash_pair,equality_prenom_t>;
 
+//fonction lisant le fichier et englobant les autres fonctions
 void lire_base_deces(const std::string& nomfic, base_deces_t& bp);
-using branche_t = std::pair<int, prenom_t>;
-
-
 //fonction séparant les prénoms associés et renvoyant une paire prenom/prénoms associés
 void separate(std::string prenoms_str, auto& liste_p, int sexe);
 //fonction insérant ces prénoms dans la base
