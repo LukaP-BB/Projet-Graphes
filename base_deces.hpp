@@ -11,8 +11,7 @@
 #include <array>
 #include <csv/csv.h>
 
-using deces_file_t =  io::CSVReader<1, io::trim_chars<' '>,
-										 io::double_quote_escape<',','\"'> >;
+using deces_file_t =  io::CSVReader<1, io::trim_chars<' '>,io::double_quote_escape<',','\"'> >;
 
 enum class sexe_t {
    masculin = 1,
@@ -44,11 +43,14 @@ using branche_t = std::unordered_map<std::string,int>;
 //Une table qui contiendra pour chaque prénom, la table des prénoms associés branche_t
 using base_deces_t = std::unordered_map<std::string,branche_t>;
 
+//compte le nombre de prénom maximal observé
+void comptage(std::vector<std::string>& vect, int& n_max);
+
 //fonction lisant le fichier et englobant les autres fonctions
-void lire_base_deces(const std::string& nomfic, base_deces_t& bp);
+void lire_base_deces(const std::string& nomfic, std::vector<std::string>& vect);
 //fonction séparant les prénoms associés et renvoyant une paire prenom/prénoms associés
-void separate(std::string prenoms_str, auto& liste_p);
+void separate(std::vector<std::string>& vect, base_deces_t& base_deces);
 //fonction insérant ces prénoms dans la base
-void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces);
+// void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces);
 
 #endif // __base_deces_hpp__

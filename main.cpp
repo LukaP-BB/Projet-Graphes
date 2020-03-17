@@ -21,8 +21,13 @@ int main(int argc, char *argv[])
 	}
 
 	base_deces_t bp;
+	std::vector<std::string> vect;
 
-	lire_base_deces(argv[1],bp);
+	lire_base_deces(argv[1], vect);
+	int n_max = 0;
+	// comptage(vect, n_max);
+	std::cout << "n max = " << n_max << '\n';
+	separate(vect, bp);
 
 	// cout << bp.first.first;
 	//
