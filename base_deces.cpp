@@ -35,7 +35,7 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces){
       std::string nom[10]; //intialisation d'un tableau de 10 cases (7 prenoms max observés dans la base "large")
       std::string prenom_noeud, prenom_branche, p_sep;
       branche_t branche;
-
+      std::cout << "Création du graphe..." << '\n';
       for (std::string prenoms_lies : vect) {
             std::stringstream s(prenoms_lies);
             //On place les prénoms dans un tableau et on garde combien ont été enregitsrés
@@ -46,22 +46,10 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces){
             }
             for (int i = nb_prenoms-1; 0 <= i; i--) {
                   prenom_noeud = nom[i];
-                  auto iter = base_deces.find(prenom_noeud);
-                  if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
-                        //on ajoute les prénoms associés à la table de hash
-                        for (int i = nb_prenoms-1; 0 <= i; i--) {
-                              prenom_branche = nom[i];
-                              if (prenom_noeud != prenom_branche){
-                                    base_deces[prenom_noeud][prenom_branche] ++;
-                              }
-                        }
-                  } else { // Le prénom n'est pas dans la base ?
-                        // // => On l'y ajoute
-                        for (int i = nb_prenoms-1; 0 <= i; i--) {
-                              prenom_branche = nom[i];
-                              if (prenom_branche != prenom_noeud){
-                                    base_deces[prenom_noeud][prenom_branche] ++;
-                              }
+                  for (int i = nb_prenoms-1; 0 <= i; i--) {
+                        prenom_branche = nom[i];
+                        if (prenom_noeud != prenom_branche){
+                              base_deces[prenom_noeud][prenom_branche] ++;
                         }
                   }
             }
@@ -75,12 +63,10 @@ void comptage(std::vector<std::string>& vect, int& n_max){
             std::stringstream s1(prenoms_lies);
             int n = 0;
             while (s1>>prenoms_lies){
-                  // std::cout << prenoms_lies << n << '\n';
                   n++;
             }
             if (n > n_max) {
                   n_max = n;
             }
-
       }
 }
