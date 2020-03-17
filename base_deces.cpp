@@ -50,61 +50,53 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces){
       std::string nom[10]; //intialisation d'un tableau de 10 cases (7 prenoms max observés dans la base "large")
       std::string prenom_noeud, prenom_branche, p_sep;
       branche_t branche;
-      int errors = 0;
 
       for (std::string prenoms_lies : vect) {
-
             // std::cout << prenoms_lies << '\n';
             std::stringstream s(prenoms_lies);
             // std::cout << prenoms_lies << '\n';
 
-            try {
-                  //On place les prénoms dans un tableau et on garde combien ont été enregitsrés
-                  int nb_prenoms = 0;
-                  while (s>>p_sep){
-                        // std::cout << ". " << p_sep << ". " << '\n';
-                        if (p_sep != "") {
-                              nom[nb_prenoms] = p_sep;
-                              nb_prenoms ++;
-                        }
-                  }
+            //On place les prénoms dans un tableau et on garde combien ont été enregitsrés
+            int nb_prenoms = 0;
+            while (s>>p_sep){
+                  nom[nb_prenoms] = p_sep;
+                  nb_prenoms ++;
+            }
 
-                  for (int i = nb_prenoms-1; 0 <= i; i--) {
-                        prenom_noeud = nom[i];
-                        auto iter = base_deces.find(prenom_noeud);
+            for (int i = nb_prenoms-1; 0 <= i; i--) {
+                  prenom_noeud = nom[i];
+                  auto iter = base_deces.find(prenom_noeud);
 
-                        // std::cout << prenom_noeud << '\n';
+                  // std::cout << prenom_noeud << '\n';
 
-                        if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
-                              //on ajoute les prénoms associés à la table de hash
-                              for (int i = nb_prenoms-1; 0 <= i; i--) {
-                                    prenom_branche = nom[i];
-                                    // std::cout << "\t" << nom[i] <<'\n';
-                                    if (prenom_noeud != prenom_branche){
-                                          branche = base_deces[prenom_noeud];
-                                          branche[prenom_branche] ++;
-                                          base_deces[prenom_noeud] = branche;
-                                    }
+                  if (iter != base_deces.end()) { // Le prénom est déjà dans la base ?
+                        //on ajoute les prénoms associés à la table de hash
+                        for (int i = nb_prenoms-1; 0 <= i; i--) {
+                              prenom_branche = nom[i];
+                              // std::cout << "\t" << nom[i] <<'\n';
+                              if (prenom_noeud != prenom_branche){
+                                    // branche = base_deces[prenom_noeud];
+                                    // branche[prenom_branche] ++;
+                                    // base_deces[prenom_noeud] = branche;
+                                    base_deces[prenom_noeud][prenom_branche] ++;
                               }
-                        } else { // Le prénom n'est pas dans la base ?
-                              // // => On l'y ajoute
-                              base_deces[prenom_noeud];
-                              for (int i = nb_prenoms-1; 0 <= i; i--) {
-                                    prenom_branche = nom[i];
-                                    // std::cout << "\t" << prenom_branche <<'\n';
-                                    if (prenom_branche != prenom_noeud){
-                                          branche = base_deces[prenom_noeud];
-                                          branche[prenom_branche] ++;
-                                          base_deces[prenom_noeud] = branche;
-                                    }
+                        }
+                  } else { // Le prénom n'est pas dans la base ?
+                        // // => On l'y ajoute
+                        // base_deces[prenom_noeud];
+                        for (int i = nb_prenoms-1; 0 <= i; i--) {
+                              prenom_branche = nom[i];
+                              // std::cout << "\t" << prenom_branche <<'\n';
+                              if (prenom_branche != prenom_noeud){
+                                    // branche = base_deces[prenom_noeud];
+                                    // branche[prenom_branche] ++;
+                                    // base_deces[prenom_noeud] = branche;
+                                    base_deces[prenom_noeud][prenom_branche] ++;
                               }
                         }
                   }
-            }catch(...){
-                  errors ++;
             }
       }
-      std::cout << "Erreurs : " << errors << '\n';
 }
 
 
