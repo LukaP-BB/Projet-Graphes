@@ -33,9 +33,20 @@ int main(int argc, char *argv[])
 	separate(vect, bp);
 
 	connexe_t tableau_co_annexes;
-	connexes(bp, tableau_co_annexes);
+	// connexes(bp, tableau_co_annexes);
+
+	// base_deces_t base2 = bp;
+	creaction_connexe(bp, tableau_co_annexes);
 
 	int i = 0;
+	// cout << bp.first.first;
+
+	// for (const auto& p : bp) {
+	// 	// cout << p.first << endl;
+	// 	// for (const auto& p : p.second){
+	// 	// 	cout << "\t" << p.first << " " << p.second <<endl;
+	// 	// }
+	// }
 	for (tableau_t set : tableau_co_annexes){
 		std::cout << "Tableau : " << i++ << '\n';
 		for (std::string prenom : set){
@@ -43,13 +54,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// cout << bp.first.first;
-	//
-	// for (const auto& p : bp) {
-	// 	cout << p.first << endl;
-	// 	for (const auto& p : p.second){
-	// 		cout << "\t" << p.first << " " << p.second <<endl;
-	// 	}
-	// }
+	return 0;
 }
 
