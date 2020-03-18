@@ -35,12 +35,14 @@
 //Prénoms suivants :
       //si le prénom est dans l'un des tableaux, on ajoute tous les prénoms associés dans ce tableau
       //si le prénom n'est pas dans l'un des tableaux, on l'ajoute lui et tous ses prénoms associés
-void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
+
+
+void connexes(base_deces_t & base_deces, connexe_t & tableau_composantes){
       std::cout << "Création des composantes connexes..." << '\n';
       for (auto prenom : base_deces) {
+            tableau_t set_prenoms;
             if (tableau_composantes.empty()){ //s'il n'y a pas de encore de set de prénoms
                   //on met tous les prénoms de la table de hash dans un set de prénoms que l'on crée
-                  tableau_t set_prenoms;
                   set_prenoms.insert(prenom.first);
 
                   for (auto & prenom2 : prenom.second){
@@ -48,11 +50,12 @@ void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
                   }
                   tableau_composantes.push_back(set_prenoms);
             }else{
-                  bool found = false;
                   // parcourir tous les sets du tableau_composantes
                   //si ce prénom ou un de ses prénoms associés est déja dans un de ces sets : ajouter tous les prénoms associés
 
+                  bool found = false;
                   for (tableau_t& set : tableau_composantes){
+                        // found = false;
                         //on commence par chercher le prénom du noeud courant
                         if (set.find(prenom.first) != set.end()){
                               //si on le trouve, on ajoute tous les prénoms à la branche de ce noeud
@@ -61,9 +64,10 @@ void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
                               }
                               found = true; //et on retient qu'on l'a fait
                         }
-
-                        //si le prénom courant n'est pas trouvé, on cherche dans ses prénoms associés
+                        //si le prénom courant n'est pas trouvé
+                        //on cherche ses prénoms associés dans tous les sets
                         if (!found) {
+                              // for (tableau_t& set : tableau_composantes){
                               for (auto & prenom2 : prenom.second){
                                     if (set.find(prenom2.first) != set.end()){
                                           found = true;
@@ -76,15 +80,14 @@ void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
                                     set.insert(prenom.first);
                                     for (auto & prenom2 : prenom.second){
                                           set.insert(prenom2.first);
-                                          found = true;
                                     }
                               }
                         }
                   }
                   // si aucun de ces prénoms n'est dans aucun de ces sets : créer un nouveau set
                   if (!found){
-                        tableau_t set_prenoms;
                         set_prenoms.insert(prenom.first);
+                        std::cout << "Prénom potentiellement problématique : " << prenom.first << '\n';
                         for (auto & prenom2 : prenom.second){
                               set_prenoms.insert(prenom2.first);
                         }
@@ -93,7 +96,6 @@ void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
             }
       }
 }
-
 
 //fonction séparant les prénoms associés et en faisant une liste
 //entrée : vecteur et base_deces_t
