@@ -9,6 +9,7 @@
 #include <string>
 #include <unordered_map>
 #include <array>
+#include<unordered_set>
 #include <csv/csv.h>
 
 using deces_file_t =  io::CSVReader<1, io::trim_chars<' '>,io::double_quote_escape<',','\"'> >;
@@ -43,6 +44,11 @@ using branche_t = std::unordered_map<std::string,int>;
 //Une table qui contiendra pour chaque prénom, la table des prénoms associés branche_t
 using base_deces_t = std::unordered_map<std::string,branche_t>;
 
+//utilisation de set pour avoir l'équivalent d'une unordered_map ne contenant que des keys
+using tableau_t = std::unordered_set<std::string>; //3 fois plus rapide qu'un set normal dans le cas présent
+//le tableau des composantes connexes
+using connexe_t = std::vector<tableau_t>;
+
 //compte le nombre de prénom maximal observé
 void comptage(std::vector<std::string>& vect, int& n_max);
 
@@ -52,5 +58,8 @@ void lire_base_deces(const std::string& nomfic, std::vector<std::string>& vect);
 void separate(std::vector<std::string>& vect, base_deces_t& base_deces);
 //fonction insérant ces prénoms dans la base
 // void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces);
+
+//fonction calculant les composantes connexes
+void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes);
 
 #endif // __base_deces_hpp__

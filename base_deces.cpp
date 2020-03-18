@@ -29,14 +29,80 @@
 }
 
 
+//Composantes connexes :
+//parcourir les prénoms de base_deces, remplir un tableau de tableau de prénoms
+//Premier prénom de base_deces : l'ajouter lui et les prénoms associés au premier tableau
+//Prénoms suivants :
+      //si le prénom est dans l'un des tableaux, on ajoute tous les prénoms associés dans ce tableau
+      //si le prénom n'est pas dans l'un des tableaux, on l'ajoute lui et tous ses prénoms associés
+void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
+      std::cout << "Création des composantes connexes..." << '\n';
+      for (auto prenom : base_deces) {
+            if (tableau_composantes.empty()){ //s'il n'y a pas de encore de set de prénoms
+                  //on met tous les prénoms de la table de hash dans un set de prénoms que l'on crée
+                  tableau_t set_prenoms;
+                  set_prenoms.insert(prenom.first);
+
+                  for (auto & prenom2 : prenom.second){
+                        set_prenoms.insert(prenom2.first);
+                  }
+                  tableau_composantes.push_back(set_prenoms);
+            }else{
+                  bool found = false;
+                  // parcourir tous les sets du tableau_composantes
+                  //si ce prénom ou un de ses prénoms associés est déja dans un de ces sets : ajouter tous les prénoms associés
+
+                  for (tableau_t& set : tableau_composantes){
+                        //on commence par chercher le prénom du noeud courant
+                        if (set.find(prenom.first) != set.end()){
+                              //si on le trouve, on ajoute tous les prénoms à la branche de ce noeud
+                              for (auto & prenom2 : prenom.second){
+                                    set.insert(prenom2.first);
+                              }
+                              found = true; //et on retient qu'on l'a fait
+                        }
+
+                        //si le prénom courant n'est pas trouvé, on cherche dans ses prénoms associés
+                        if (!found) {
+                              for (auto & prenom2 : prenom.second){
+                                    if (set.find(prenom2.first) != set.end()){
+                                          found = true;
+                                          break;
+                                    }
+                              }
+                              //si l'un des prénoms associés est trouvé dans le set,
+                              //on insère le prénom courant et tous les prénoms associés
+                              if (found){
+                                    set.insert(prenom.first);
+                                    for (auto & prenom2 : prenom.second){
+                                          set.insert(prenom2.first);
+                                          found = true;
+                                    }
+                              }
+                        }
+                  }
+                  // si aucun de ces prénoms n'est dans aucun de ces sets : créer un nouveau set
+                  if (!found){
+                        tableau_t set_prenoms;
+                        set_prenoms.insert(prenom.first);
+                        for (auto & prenom2 : prenom.second){
+                              set_prenoms.insert(prenom2.first);
+                        }
+                        tableau_composantes.push_back(set_prenoms);
+                  }
+            }
+      }
+}
+
+
 //fonction séparant les prénoms associés et en faisant une liste
 //entrée : vecteur et base_deces_t
 void separate(std::vector<std::string>& vect, base_deces_t& base_deces){
       std::string nom[10]; //intialisation d'un tableau de 10 cases (7 prenoms max observés dans la base "large")
       std::string prenom_noeud, prenom_branche, p_sep;
-      branche_t branche;
       std::cout << "Création du graphe..." << '\n';
       for (std::string prenoms_lies : vect) {
+            // std::cout << prenoms_lies << '\n';
             std::stringstream s(prenoms_lies);
             //On place les prénoms dans un tableau et on garde combien ont été enregitsrés
             int nb_prenoms = 0;
@@ -44,8 +110,14 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces){
                   nom[nb_prenoms] = p_sep;
                   nb_prenoms ++;
             }
+            if( nb_prenoms == 1){
+                  branche_t branche;
+                  base_deces.insert({nom[0], branche});
+            }
+
             for (int i = nb_prenoms-1; 0 <= i; i--) {
                   prenom_noeud = nom[i];
+                  // std::cout << prenom_noeud << '\n';
                   for (int i = nb_prenoms-1; 0 <= i; i--) {
                         prenom_branche = nom[i];
                         if (prenom_noeud != prenom_branche){

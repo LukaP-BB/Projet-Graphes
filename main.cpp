@@ -10,6 +10,9 @@
 #include <iostream>
 using namespace std;
 
+#include <chrono>
+#include <thread>
+
 // TODO
 
 
@@ -26,16 +29,27 @@ int main(int argc, char *argv[])
 	lire_base_deces(argv[1], vect);
 	int n_max = 0;
 	// comptage(vect, n_max);
-	std::cout << "n max = " << n_max << '\n';
+	// std::cout << "n max = " << n_max << '\n';
 	separate(vect, bp);
+
+	connexe_t tableau_co_annexes;
+	connexes(bp, tableau_co_annexes);
+
+	int i = 0;
+	for (tableau_t set : tableau_co_annexes){
+		std::cout << "Tableau : " << i++ << '\n';
+		for (std::string prenom : set){
+			std::cout << "\t" << prenom << '\n';
+		}
+	}
 
 	// cout << bp.first.first;
 	//
-	for (const auto& p : bp) {
-		cout << p.first << endl;
-		for (const auto& p : p.second){
-			cout << "\t" << p.first << " " << p.second <<endl;
-		}
-	}
+	// for (const auto& p : bp) {
+	// 	cout << p.first << endl;
+	// 	for (const auto& p : p.second){
+	// 		cout << "\t" << p.first << " " << p.second <<endl;
+	// 	}
+	// }
 }
 
