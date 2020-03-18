@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
 	connexe_t tableau_co_annexes;
 	connexes(bp, tableau_co_annexes);
 
+	// creaction_connexe(bp, tableau_co_annexes);
+
 	int i = 0;
 	for (tableau_t set : tableau_co_annexes){
 		std::cout << "Tableau : " << i++ << '\n';
@@ -42,6 +44,7 @@ int main(int argc, char *argv[])
 			std::cout << "\t" << prenom << '\n';
 		}
 	}
+	return 0;
 
 	// cout << bp.first.first;
 	//

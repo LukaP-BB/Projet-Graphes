@@ -29,13 +29,48 @@
 }
 
 
+//composantes connexes approche récursive :
+//parcours de la base et marquage des prénoms déjà parcourus
+void connexe(base_deces_t & base_deces, std::string & noeud, tableau_t & set_prenoms){
+      //on marque le sommet du graphe donné
+      if (set_prenoms.find(noeud) == set_prenoms.end()){
+            std::cout << "Ajoute : " << noeud << '\n';
+            set_prenoms.insert(noeud);
+      }
+      // std::cout << "noeud : " << noeud << '\n';
+      for (auto & branche : base_deces[noeud]){
+            // std::cout << branche.first << '\n';
+            //on parcours les branches non marquées et on ajoute les prénoms
+            if (set_prenoms.find(branche.first) == set_prenoms.end()){
+                  std::string branche_t = branche.first;
+                  std::cout << "explore : " << branche_t << '\n';
+                  connexe(base_deces, branche_t, set_prenoms);
+            }
+      }
+      std::cout << "efface : " << noeud << '\n';
+      base_deces.erase(noeud);
+}
+
+void creaction_connexe(base_deces_t & base_deces, connexe_t & tableau_composantes){
+      //base2 sera détruite au fur et à mesure de la création du tableau des composantes connexes
+      base_deces_t base2 = base_deces;
+      for (auto & branche : base2){
+            tableau_t set_prenoms;
+            std::string branche_t = branche.first;
+            // std::cout << "/* message */" << branche_t << '\n';
+            connexe(base2, branche_t, set_prenoms);
+            tableau_composantes.push_back(set_prenoms);
+      }
+
+}
+
 //Composantes connexes :
 //parcourir les prénoms de base_deces, remplir un tableau de tableau de prénoms
 //Premier prénom de base_deces : l'ajouter lui et les prénoms associés au premier tableau
 //Prénoms suivants :
       //si le prénom est dans l'un des tableaux, on ajoute tous les prénoms associés dans ce tableau
       //si le prénom n'est pas dans l'un des tableaux, on l'ajoute lui et tous ses prénoms associés
-void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes){
+void connexes(base_deces_t & base_deces, connexe_t & tableau_composantes){
       std::cout << "Création des composantes connexes..." << '\n';
       for (auto prenom : base_deces) {
             if (tableau_composantes.empty()){ //s'il n'y a pas de encore de set de prénoms

@@ -59,6 +59,12 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces);
 //fonction insérant ces prénoms dans la base
 // void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces);
 
+
+void connexe(base_deces_t & base_deces, std::string & graphe, tableau_t & set_prenoms);
+void creaction_connexe(base_deces_t & base_deces, connexe_t & tableau_composantes);
+
+
+
 //fonction calculant les composantes connexes
 void connexes(base_deces_t& base_deces, connexe_t & tableau_composantes);
 
