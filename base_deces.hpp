@@ -15,8 +15,8 @@
 using deces_file_t =  io::CSVReader<1, io::trim_chars<' '>,io::double_quote_escape<',','\"'> >;
 
 enum class sexe_t {
-   masculin = 1,
-	 feminin = 2
+      masculin = 1,
+	feminin = 2
 };
 
 std::ostream& operator<<(std::ostream& os, sexe_t s);
@@ -60,7 +60,7 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces);
 // void prenom_add(std::vector<std::string> liste_prenoms, base_deces_t& base_deces);
 
 
-void connexe(base_deces_t & base_deces, std::string & graphe, tableau_t & set_prenoms);
+void connexe(base_deces_t & base_deces, std::string & graphe, tableau_t & set_prenoms, tableau_t & all_prenoms);
 void creaction_connexe(base_deces_t & base_deces, connexe_t & tableau_composantes);
 
 
