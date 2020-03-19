@@ -36,7 +36,7 @@ void lire_base_prenoms(const string& nomfic, base_prenoms_t& bp)
 	try {
 		name_file_t f(nomfic);
 		f.read_header(io::ignore_extra_column,"prénom","sexe","ddn","nombre");
-		
+
 		string prenomstr;
 		int sexe;
 		uint32_t annee, nombre;
@@ -50,7 +50,7 @@ void lire_base_prenoms(const string& nomfic, base_prenoms_t& bp)
 				// => On l'y ajoute
 				bp[prenom] = occurrences_t{0};
 				bp[prenom][annee-1900]=nombre;
-				cout << ">> " << bp[prenom][annee-1900] << endl;
+				// cout << ">> " << bp[prenom][annee-1900] << endl;
 			}
 		}
 	} catch (const io::error::can_not_open_file& e) {
