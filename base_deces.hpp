@@ -10,10 +10,12 @@
 #ifndef __base_deces_hpp__
 #define __base_deces_hpp__
 
+#include <fstream>
 #include <iosfwd>
 #include <string>
 #include <unordered_map>
 #include <array>
+#include <queue>
 #include<unordered_set>
 #include <csv/csv.h>
 #include "base_prenoms.hpp"
@@ -42,19 +44,30 @@ void separate(std::vector<std::string>& vect, base_deces_t& base_deces);
 
 //fonction remplissant le tableau de sets de prénoms
 void creaction_connexe(base_deces_t & base_deces, connexe_t & tableau_composantes);
+
 //fonction remplissant un set de prénoms
 void connexe(base_deces_t & base_deces, std::string & graphe, tableau_t & set_prenoms, tableau_t & all_prenoms);
 
+//fonction affichant les prénoms oubliés
 void prenoms_oublies ( tableau_t& prenoms_oublies, base_deces_t& graphe);
 
+//fonction utilisée lors des tests préliminaires permettant d'afficher le graphe
 void afficher_graphe(base_deces_t & bp);
 
+//fonction cherchant un prénom dans la base
+//et renvoyant la liste triée des prénoms associés par fréquence décroissante
 void afficher_prenoms_assoc(base_deces_t & graphe);
 
 //fonction transformant une chaine de caractères en majuscules
 void UPPER(std::string& prenom);
 
+//fonction permettant d'afficher tous les prénoms
+//faisant partie de la même composante connexe qu'un prénom demandé
+//et proposant d'enregistrer le résultat dans un fichier
 void afficher_composantes_connexes(connexe_t tableau_connexes);
+
+//parcours en largeur du graphe
+void least_amount(base_deces_t & graphe, connexe_t tableau_composantes, std::string& prenom1, std::string& prenom2);
 
 
 #endif // __base_deces_hpp__
